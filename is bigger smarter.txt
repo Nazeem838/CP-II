@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int ans(int arr[], int dp[], int n)
+{
+    int mx = 0;
+    for (int i = 1; i < n; i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            if (arr[j] < arr[i] && dp[i] < dp[j] + 1)
+            {
+                dp[i] = dp[j] + 1;
+                if (dp[i] > mx)
+                    mx = dp[i];
+            }
+        }
+    }
+
+    return mx;
+}
+int main()
+{
+    vector<pair<int, int>> v;
+    int wt, iq;
+    while (cin >> wt >> iq)
+    {
+
+        v.push_back({wt, iq});
+    }
+
+    sort(v.begin(), v.end());
+    int len = v.size();
+    int arr[len], dp[len];
+    for (int i = 0; i < len; i++)
+    {
+        arr[(len - i) - 1] = v[i].second;
+        dp[i] = 1;
+    }
+
+    cout << ans(arr, dp, len) << endl;
+
+    return 0;
+}
